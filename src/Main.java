@@ -2,11 +2,6 @@
 
 import java.util.Scanner;
 
-class Student {
-    String name;
-    String major;
-}
-
 public class Main {
     private static boolean checkNumber(int inputNum) {
         if (inputNum == 4) return true;
@@ -29,6 +24,7 @@ public class Main {
             System.out.println(student.name);
         }
         System.out.println("입니다.");
+        students[1].sleep();
     }
 
     public static void main(String[] args) {

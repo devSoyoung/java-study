@@ -125,3 +125,53 @@ public static void main(String[] args) {
     }
 }
 ```
+
+### 클래스의 상속
+#### is-a(상속) / has-a
+Dog라는 클래스가 더 큰 개념인 Animal 클래스를 상속받았다고 가정했을 때, 강아지는 동물이므로 Dog is an Animal이라는 문장이 성립한다. 이러한 상속 관계를 is-a 관계라고 한다.
+
+#### Object 클래스
+자바에서 만드는 모든 클래스는 Object 클래스를 상속받는다.
+```java
+public class MyClass1 extends Object {
+    ...
+}
+
+public class MyClass2 extends Object {
+    ...
+}
+
+...
+
+Object cls1 = new MyClass1();
+Object cls2 = new MyClass2();
+```
+이처럼 모든 객체는 Object 자료형으로 사용할 수 있다.
+
+#### Method Overridding
+메소드 오버라이딩(부모클래스의 메소드를 자식클래스가 동일한 형태로 재구현하는 행위)을 통해서 상속받은 부모 클래스의 메소드를 자식 클래스에서 재정의 할 수 있다. 이 프로젝트에서는 Person.java 파일의 Person 클래스에서 정의한 Sleep 함수를 Student.java 파일의 Student 클래스에서 재정의하였다.
+
+이렇게 하면 Student 클래스의 sleep 메소드가 Person 클래스의 것보다 더 높은 우선순위를 가지게 되고 student.sleep()를 호출하면 Student 클래스에서 정의한 sleep 메소드가 실행된다. 
+
+```java
+// Person.java
+public class Person {
+    String name;
+    int age;
+
+    public void sleep() {
+        System.out.println(name + "(이)가 잠들었습니다.");
+    }
+}
+```
+
+```java
+// Student.java
+public class Student extends Person {
+    String major;
+
+    public void sleep() {
+        System.out.println(name + "(이)가 공부를 하다 잠들었습니다.");
+    }
+}
+```
