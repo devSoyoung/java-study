@@ -130,6 +130,9 @@ public static void main(String[] args) {
 #### is-a(상속) / has-a
 Dog라는 클래스가 더 큰 개념인 Animal 클래스를 상속받았다고 가정했을 때, 강아지는 동물이므로 Dog is an Animal이라는 문장이 성립한다. 이러한 상속 관계를 is-a 관계라고 한다.
 
+#### 다중 상속
+C++, 파이썬 등과 달리 자바는 다중 상속을 지원하지 않는다. 만약 A 클래스가 B, C 클래스를 다중 상속한다고 생각해보자. B 클래스와 C 클래스는 모두 sayHello()라는 메소드를 가지고 있다. 두 클래스를 상속받은 A 클래스에서 sayHello()를 호출했을 때, B와 C 중 어느 클래스의 메소드를 실행해야 할까? 이러한 다중상속으로 인해 발생하는 애매모호함을 피하기 위해 다중 상속이 지원되지 않는다.(다른 언어들의 경우 우선순위를 적용해서 해결한다고 한다.)
+
 #### Object 클래스
 자바에서 만드는 모든 클래스는 Object 클래스를 상속받는다.
 ```java
@@ -175,3 +178,56 @@ public class Student extends Person {
     }
 }
 ```
+
+### 클래스 생성자 문제
+생성자를 오버라이딩하면 클래스 변수들의 값을 생성과 동시에 설정할 수 있다. 이 프로젝트에서 Person 클래스에 생성자를 만들고, Main의 Student를 생성하는 지점에서 바로 값을 바꾸도록 해주었다.
+
+```java
+// Person.java
+public class Person {
+    String name;
+    int age;
+
+    public Person(String name) {
+        this.name = name;
+    }
+
+    public void sleep() {
+        System.out.println(name + "(이)가 잠들었습니다.");
+    }
+}
+
+```
+
+```java
+// Main.java
+    public static void main(String[] args) {
+       ...
+        String[] studentNames = {"김철수", "박영희", "홍길동", "이춘향"};
+        Student[] students = new Student[4];
+        for(int i = 0; i < 4; i++) {
+            students[i] = new Student(studentNames[i]);
+//            students[i].name = studentNames[i];
+        }
+     ...
+    }
+```
+
+에러가 나서 생각해보니, 내가 만들어서 쓰고 있는 것은 Student 클래스였으니, Student 클래스의 생성자를 오버라이딩해줘야겠다고 생각했다. 그래서 Student 클래스에 생성자를 만들어주니 상속 받은 Person 클래스의 default 생성자가 없다라고 에러가 떴다. 검색해보니 super()를 호출해주어야한다고 한다. 그래서 Student 클래스를 다음과 같이 고치니 정상 작동했다.
+
+```java
+public class Student extends Person {
+    String major;
+
+    public Student(String name) {
+        super(name);
+//        this.name = name;
+    }
+
+    public void sleep() {
+        System.out.println(name + "(이)가 공부를 하다 잠들었습니다.");
+    }
+}
+```
+
+super() 그리고 this에 관련되어 잘 정리된 포스트가 있어서 [링크](http://ithub.tistory.com/66)한다.

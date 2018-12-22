@@ -31,8 +31,8 @@ public class Main {
         String[] studentNames = {"김철수", "박영희", "홍길동", "이춘향"};
         Student[] students = new Student[4];
         for(int i = 0; i < 4; i++) {
-            students[i] = new Student();
-            students[i].name = studentNames[i];
+            students[i] = new Student(studentNames[i]);
+//            students[i].name = studentNames[i];
         }
 
         Scanner sc = new Scanner(System.in);
